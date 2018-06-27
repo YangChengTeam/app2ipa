@@ -4,11 +4,14 @@ if [[ ${app##*.} != 'app' ]]; then
 	echo 'E: extension not app'
 	exit
 fi
+
 name=$(basename $app .app)
-remkdir $name && cd $name
+mkdir $name && cd $name
 mkdir Payload
-zip -r $name.ipa .
+mv ../$app Payload
+zip -r ../$name.ipa .
 
 if [[ -f $name.ipa ]]; then
+	rm -rf ../$name
 	echo 'I: success'
 fi
